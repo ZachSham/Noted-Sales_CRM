@@ -6,7 +6,7 @@ async function migrateRecords() {
     
     const collection = await db.collection("records");
     
-    // Find all records that have "name" field but no "client" field
+    // Find all records that have "name" field but no "client" fields
     const recordsToUpdate = await collection.find({
       name: { $exists: true },
       client: { $exists: false }
