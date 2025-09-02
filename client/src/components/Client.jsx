@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-export default function Record() {
+export default function Client() {
   const [form, setForm] = useState({
     client: "",
     email: "",
@@ -18,26 +18,26 @@ export default function Record() {
       if(!id) return;
       setIsNew(false);
       const response = await fetch(
-        `http://localhost:5050/record/${params.id.toString()}`
+        `http://localhost:5050/clients/${params.id.toString()}`
       );
       if (!response.ok) {
         const message = `An error has occurred: ${response.statusText}`;
         console.error(message);
         return;
       }
-      const record = await response.json();
-      if (!record) {
-        console.warn(`Record with id ${id} not found`);
+              const client = await response.json();
+        if (!client) {
+          console.warn(`Client with id ${id} not found`);
         navigate("/");
         return;
       }
       // Handle both old "name" field and new "client" field
-      setForm({
-        client: record.client || record.name || "",
-        email: record.email || "",
-        phone: record.phone || "",
-        notes: record.notes || "",
-      });
+              setForm({
+          client: client.client || client.name || "",
+          email: client.email || "",
+          phone: client.phone || "",
+          notes: client.notes || "",
+        });
     }
     fetchData();
     return;
@@ -57,8 +57,8 @@ export default function Record() {
     try {
       let response;
       if (isNew) {
-        // if we are adding a new record we will POST to /record.
-        response = await fetch("http://localhost:5050/record", {
+        // if we are adding a new client we will POST to /clients.
+        response = await fetch("http://localhost:5050/clients", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -66,8 +66,8 @@ export default function Record() {
           body: JSON.stringify(person),
         });
       } else {
-        // if we are updating a record we will PATCH to /record/:id.
-        response = await fetch(`http://localhost:5050/record/${params.id}`, {
+        // if we are updating a client we will PATCH to /clients/:id.
+        response = await fetch(`http://localhost:5050/clients/${params.id}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
@@ -80,7 +80,7 @@ export default function Record() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
     } catch (error) {
-      console.error('A problem occurred adding or updating a record: ', error);
+              console.error('A problem occurred adding or updating a client: ', error);
     } finally {
       setForm({ client: "", email: "", phone: "", notes: "" });
       navigate("/client-manager");

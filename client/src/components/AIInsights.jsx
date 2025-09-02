@@ -8,7 +8,7 @@ export default function AIInsights() {
   useEffect(() => {
     async function fetchClient() {
       try {
-        const response = await fetch(`http://localhost:5050/record/${id}`);
+        const response = await fetch(`http://localhost:5050/clients/${id}`);
         if (response.ok) {
           const clientData = await response.json();
           setClient(clientData);

@@ -5,8 +5,8 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import App from "./App";
-import Record from "./components/Record";
-import RecordList from "./components/RecordList";
+import Client from "./components/Client";
+import ClientList from "./components/ClientList";
 import UpcomingMeetings from "./components/UpcomingMeetings";
 import TaskManager from "./components/TaskManager";
 import AIInsights from "./components/AIInsights";
@@ -17,12 +17,12 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,         // Navbar + <Outlet />
     children: [
-      { index: true, element: <RecordList /> },   // "/" -> RecordList
-      { path: "client-manager", element: <RecordList /> },   // "/client-manager" -> RecordList
+      { index: true, element: <ClientList /> },   // "/" -> ClientList
+      { path: "client-manager", element: <ClientList /> },   // "/client-manager" -> ClientList
       { path: "upcoming-meetings", element: <UpcomingMeetings /> },   // "/upcoming-meetings" -> UpcomingMeetings
       { path: "task-manager", element: <TaskManager /> },   // "/task-manager" -> TaskManager
-      { path: "create", element: <Record /> },    // "/create" -> Record
-      { path: "edit/:id", element: <Record /> },  // "/edit/123" -> Record
+      { path: "create", element: <Client /> },    // "/create" -> Client
+      { path: "edit/:id", element: <Client /> },  // "/edit/123" -> Client
       { path: "ai-insights/:id", element: <AIInsights /> },  // "/ai-insights/123" -> AIInsights
     ],
   },

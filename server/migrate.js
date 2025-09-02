@@ -1,6 +1,6 @@
 import db from "./db/connection.js";
 
-async function migrateRecords() {
+async function migrateClients() {
   try {
     console.log("Starting migration...");
     
@@ -12,10 +12,10 @@ async function migrateRecords() {
       client: { $exists: false }
     }).toArray();
     
-    console.log(`Found ${recordsToUpdate.length} records to migrate`);
+    console.log(`Found ${recordsToUpdate.length} clients to migrate`);
     
     if (recordsToUpdate.length === 0) {
-      console.log("No records need migration");
+      console.log("No clients need migration");
       return;
     }
     
@@ -28,7 +28,7 @@ async function migrateRecords() {
           $unset: { name: "" }
         }
       );
-      console.log(`Migrated record: ${record.name} -> ${record.name}`);
+      console.log(`Migrated client: ${record.name} -> ${record.name}`);
     }
     
     console.log("Migration completed successfully!");
@@ -39,4 +39,4 @@ async function migrateRecords() {
   }
 }
 
-migrateRecords();
+migrateClients();

@@ -1,13 +1,17 @@
 import express from "express";
 import cors from "cors";
-import records from "./routes/record.js";
+import clients from "./routes/clients.js";
+import taskRouter from "./routes/task.js";
+import meetingsRouter from "./routes/meetings.js";
 
 const PORT = process.env.PORT || 5050;
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use("/record", records);
+app.use("/clients", clients);
+app.use("/task", taskRouter);
+app.use("/meetings", meetingsRouter);
 
 // start the Express server
 app.listen(PORT, () => {
