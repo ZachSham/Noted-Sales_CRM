@@ -8,7 +8,13 @@ export default function AIInsights() {
   useEffect(() => {
     async function fetchClient() {
       try {
-        const response = await fetch(`http://localhost:5050/clients/${id}`);
+        const userId = localStorage.getItem("userId");
+        if (!userId) {
+          window.location.href = "/";
+          return;
+        }
+        
+        const response = await fetch(`http://localhost:5050/clients/${id}?userId=${userId}`);
         if (response.ok) {
           const clientData = await response.json();
           setClient(clientData);

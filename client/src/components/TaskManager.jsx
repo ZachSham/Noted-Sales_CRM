@@ -22,7 +22,13 @@ export default function TaskManager() {
   useEffect(() => {
     async function getTasks() {
       try {
-        const response = await fetch(`http://localhost:5050/task/`);
+        const userId = localStorage.getItem("userId");
+        if (!userId) {
+          window.location.href = "/";
+          return;
+        }
+        
+        const response = await fetch(`http://localhost:5050/task/?userId=${userId}`);
         if (!response.ok) {
           const message = `An error occurred: ${response.statusText}`;
           console.error(message);
@@ -41,7 +47,13 @@ export default function TaskManager() {
   useEffect(() => {
     async function getClients() {
       try {
-        const response = await fetch(`http://localhost:5050/clients/`);
+        const userId = localStorage.getItem("userId");
+        if (!userId) {
+          window.location.href = "/";
+          return;
+        }
+        
+        const response = await fetch(`http://localhost:5050/clients/?userId=${userId}`);
         if (!response.ok) {
           const message = `An error occurred: ${response.statusText}`;
           console.error(message);
@@ -82,6 +94,7 @@ export default function TaskManager() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          userId: localStorage.getItem("userId"),
           clientId: form.clientId || null,
           text: form.text,
           dueAt: new Date(dateTimeString),

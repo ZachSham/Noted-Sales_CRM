@@ -15,7 +15,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
     let collection = await db.collection("tasks");
-    let results = await collection.find({}).sort({ dueAt: 1 }).toArray();
+    let results = await collection.find({ userId: req.query.userId }).sort({ dueAt: 1 }).toArray();
     res.send(results).status(200);
   } catch (err) {
     console.error(err);
@@ -42,6 +42,7 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     let newDocument = {
+      userId: req.body.userId,
       clientId: req.body.clientId || null,
       text: req.body.text,
       dueAt: new Date(req.body.dueAt),

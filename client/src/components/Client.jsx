@@ -17,8 +17,15 @@ export default function Client() {
       const id = params.id?.toString() || undefined;
       if(!id) return;
       setIsNew(false);
+      
+      const userId = localStorage.getItem("userId");
+      if (!userId) {
+        window.location.href = "/";
+        return;
+      }
+      
       const response = await fetch(
-        `http://localhost:5050/clients/${params.id.toString()}`
+        `http://localhost:5050/clients/${params.id.toString()}?userId=${userId}`
       );
       if (!response.ok) {
         const message = `An error has occurred: ${response.statusText}`;
@@ -53,7 +60,13 @@ export default function Client() {
   // This function will handle the submission.
   async function onSubmit(e) {
     e.preventDefault();
-    const person = { ...form };
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      window.location.href = "/";
+      return;
+    }
+    
+    const person = { ...form, userId };
     try {
       let response;
       if (isNew) {

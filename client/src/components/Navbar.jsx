@@ -1,6 +1,22 @@
 import { NavLink } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 export default function Navbar() {
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []);
+
+  function handleLogout() {
+    localStorage.removeItem("userId");
+    localStorage.removeItem("username");
+    window.location.href = "/";
+  }
+
   return (
     <div>
       <nav className="flex justify-between items-center mb-6">
@@ -32,6 +48,16 @@ export default function Navbar() {
           >
             <div className="text-sm font-medium text-slate-900">Task Manager</div>
           </NavLink>
+
+          {/* User Info and Logout */}
+          <div className="flex items-center space-x-3 ml-4">
+            <button
+              onClick={handleLogout}
+              className="text-sm text-red-600 hover:text-red-800 font-medium"
+            >
+              Logout
+            </button>
+          </div>
         </div>
       </nav>
     </div>

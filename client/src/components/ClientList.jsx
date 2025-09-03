@@ -9,7 +9,13 @@ export default function ClientList() {
   // This method fetches the clients from the database.
   useEffect(() => {
     async function getClients() {
-      const response = await fetch(`http://localhost:5050/clients/`);
+      const userId = localStorage.getItem("userId");
+      if (!userId) {
+        window.location.href = "/";
+        return;
+      }
+      
+      const response = await fetch(`http://localhost:5050/clients/?userId=${userId}`);
       if (!response.ok) {
         const message = `An error occurred: ${response.statusText}`;
         console.error(message);
@@ -24,7 +30,8 @@ export default function ClientList() {
 
   // This method will delete a client
   async function deleteClient(id) {
-    await fetch(`http://localhost:5050/clients/${id}`, {
+    const userId = localStorage.getItem("userId");
+    await fetch(`http://localhost:5050/clients/${id}?userId=${userId}`, {
       method: "DELETE",
     });
     const newClients = clients.filter((el) => el._id !== id);

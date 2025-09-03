@@ -10,6 +10,7 @@ import ClientList from "./components/ClientList";
 import UpcomingMeetings from "./components/UpcomingMeetings";
 import TaskManager from "./components/TaskManager";
 import AIInsights from "./components/AIInsights";
+import Login from "./components/Login";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -17,7 +18,8 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,         // Navbar + <Outlet />
     children: [
-      { index: true, element: <ClientList /> },   // "/" -> ClientList
+      { index: true, element: <Login /> },        // "/" -> Login
+      { path: "login", element: <Login /> },      // "/login" -> Login
       { path: "client-manager", element: <ClientList /> },   // "/client-manager" -> ClientList
       { path: "upcoming-meetings", element: <UpcomingMeetings /> },   // "/upcoming-meetings" -> UpcomingMeetings
       { path: "task-manager", element: <TaskManager /> },   // "/task-manager" -> TaskManager

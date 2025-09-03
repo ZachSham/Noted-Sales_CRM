@@ -14,14 +14,17 @@ const router = express.Router();
 // This section will help you get a list of all the clients.
 router.get("/", async (req, res) => {
   let collection = await db.collection("records");
-  let results = await collection.find({}).toArray();
+  let results = await collection.find({ userId: req.query.userId }).toArray();
   res.send(results).status(200);
 });
 
 // This section will help you get a single client by id
 router.get("/:id", async (req, res) => {
   let collection = await db.collection("records");
-  let query = { _id: new ObjectId(req.params.id) };
+  let query = { 
+    _id: new ObjectId(req.params.id),
+    userId: req.query.userId
+  };
   let result = await collection.findOne(query);
 
   if (!result) res.send("Not found").status(404);
@@ -32,6 +35,7 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     let newDocument = {
+      userId: req.body.userId,
       client: req.body.client,
       email: req.body.email,
       phone: req.body.phone,
@@ -49,7 +53,10 @@ router.post("/", async (req, res) => {
 // This section will help you update a client by id.
 router.patch("/:id", async (req, res) => {
   try {
-    const query = { _id: new ObjectId(req.params.id) };
+    const query = { 
+      _id: new ObjectId(req.params.id),
+      userId: req.body.userId
+    };
     const updates = {
       $set: {
         client: req.body.client,
@@ -71,7 +78,10 @@ router.patch("/:id", async (req, res) => {
 // This section will help you delete a client
 router.delete("/:id", async (req, res) => {
   try {
-    const query = { _id: new ObjectId(req.params.id) };
+    const query = { 
+      _id: new ObjectId(req.params.id),
+      userId: req.query.userId
+    };
 
     const collection = db.collection("records");
     let result = await collection.deleteOne(query);

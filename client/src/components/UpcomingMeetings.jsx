@@ -26,7 +26,13 @@ export default function UpcomingMeetings() {
   useEffect(() => {
     async function getMeetings() {
       try {
-        const response = await fetch(`http://localhost:5050/meetings/`);
+        const userId = localStorage.getItem("userId");
+        if (!userId) {
+          window.location.href = "/";
+          return;
+        }
+        
+        const response = await fetch(`http://localhost:5050/meetings/?userId=${userId}`);
         if (!response.ok) {
           const message = `An error occurred: ${response.statusText}`;
           console.error(message);
@@ -45,7 +51,13 @@ export default function UpcomingMeetings() {
   useEffect(() => {
     async function getClients() {
       try {
-        const response = await fetch(`http://localhost:5050/clients/`);
+        const userId = localStorage.getItem("userId");
+        if (!userId) {
+          window.location.href = "/";
+          return;
+        }
+        
+        const response = await fetch(`http://localhost:5050/clients/?userId=${userId}`);
         if (!response.ok) {
           const message = `An error occurred: ${response.statusText}`;
           console.error(message);
@@ -86,6 +98,7 @@ export default function UpcomingMeetings() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          userId: localStorage.getItem("userId"),
           clientId: form.clientId || null,
           title: form.title,
           meetingAt: new Date(dateTimeString),

@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
     let collection = await db.collection("meetings");
-    let results = await collection.find({}).toArray();
+    let results = await collection.find({ userId: req.query.userId }).toArray();
     res.send(results).status(200);
   } catch (err) {
     console.error(err);
@@ -35,6 +35,7 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     let newDocument = {
+      userId: req.body.userId,
       clientId: req.body.clientId || null,
       title: req.body.title,
       meetingAt: req.body.meetingAt,
