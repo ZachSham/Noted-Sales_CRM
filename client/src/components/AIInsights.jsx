@@ -1,8 +1,9 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 export default function AIInsights() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [client, setClient] = useState(null);
   const [aiResponse, setAiResponse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -12,7 +13,7 @@ export default function AIInsights() {
       try {
         const userId = localStorage.getItem("userId");
         if (!userId) {
-          window.location.href = "/";
+          navigate("/");
           return;
         }
         

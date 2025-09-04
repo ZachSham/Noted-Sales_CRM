@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function UpcomingMeetings() {
+  const navigate = useNavigate();
   const [meetings, setMeetings] = useState([]);
   const [clients, setClients] = useState([]);
   const [showForm, setShowForm] = useState(false);
@@ -28,7 +30,7 @@ export default function UpcomingMeetings() {
       try {
         const userId = localStorage.getItem("userId");
         if (!userId) {
-          window.location.href = "/";
+          navigate("/");
           return;
         }
         
@@ -53,7 +55,7 @@ export default function UpcomingMeetings() {
       try {
         const userId = localStorage.getItem("userId");
         if (!userId) {
-          window.location.href = "/";
+          navigate("/");
           return;
         }
         
@@ -166,12 +168,13 @@ export default function UpcomingMeetings() {
     try {
       const dateTimeString = `${editForm.meetingDate}T${editForm.meetingTime}`;
       
-      const response = await fetch(`http://localhost:5050/meetings/${id}`, {
-        method: "PUT",
+      const response = await fetch("http://localhost:5050/meetings", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          id: id,
           userId: localStorage.getItem("userId"),
           clientId: editForm.clientId || null,
           title: editForm.title,

@@ -1,8 +1,9 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 export default function Navbar() {
   const [username, setUsername] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
@@ -14,7 +15,7 @@ export default function Navbar() {
   function handleLogout() {
     localStorage.removeItem("userId");
     localStorage.removeItem("username");
-    window.location.href = "/";
+    navigate("/");
   }
 
   return (

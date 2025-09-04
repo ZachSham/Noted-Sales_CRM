@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function TaskManager() {
+  const navigate = useNavigate();
   const [tasks, setTasks] = useState([]);
   const [clients, setClients] = useState([]);
   const [showForm, setShowForm] = useState(false);
@@ -24,7 +26,7 @@ export default function TaskManager() {
       try {
         const userId = localStorage.getItem("userId");
         if (!userId) {
-          window.location.href = "/";
+          navigate("/");
           return;
         }
         
@@ -49,7 +51,7 @@ export default function TaskManager() {
       try {
         const userId = localStorage.getItem("userId");
         if (!userId) {
-          window.location.href = "/";
+          navigate("/");
           return;
         }
         
@@ -156,12 +158,13 @@ export default function TaskManager() {
     try {
       const dateTimeString = `${editForm.dueDate}T${editForm.dueTime}`;
       
-      const response = await fetch(`http://localhost:5050/task/${id}`, {
-        method: "PUT",
+      const response = await fetch("http://localhost:5050/task", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          id: id,
           userId: localStorage.getItem("userId"),
           clientId: editForm.clientId || null,
           text: editForm.text,

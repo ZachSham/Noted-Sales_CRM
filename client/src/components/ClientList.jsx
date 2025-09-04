@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function ClientList() {
+  const navigate = useNavigate();
   const [clients, setClients] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({
@@ -23,7 +24,7 @@ export default function ClientList() {
     async function getClients() {
       const userId = localStorage.getItem("userId");
       if (!userId) {
-        window.location.href = "/";
+        navigate("/");
         return;
       }
       
@@ -129,12 +130,13 @@ export default function ClientList() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5050/clients/${id}`, {
-        method: "PATCH",
+      const response = await fetch("http://localhost:5050/clients", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          id: id,
           userId: localStorage.getItem("userId"),
           client: editForm.client,
           email: editForm.email,

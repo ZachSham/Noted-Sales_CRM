@@ -14,8 +14,12 @@ const router = express.Router();
 // This section will help you get a list of all the tasks.
 router.get("/", async (req, res) => {
   try {
-    let collection = await db.collection("tasks");
-    let results = await collection.find({ userId: req.query.userId }).sort({ dueAt: 1 }).toArray();
+    if (!req.query.userId) {
+      return res.status(400).send("userId is required");
+    }
+    
+    const collection = await db.collection("tasks");
+    const results = await collection.find({ userId: req.query.userId }).sort({ dueAt: 1 }).toArray();
     res.send(results).status(200);
   } catch (err) {
     console.error(err);
@@ -26,9 +30,9 @@ router.get("/", async (req, res) => {
 // This section will help you get a single task by id
 router.get("/:id", async (req, res) => {
   try {
-    let collection = await db.collection("tasks");
-    let query = { _id: new ObjectId(req.params.id) };
-    let result = await collection.findOne(query);
+    const collection = await db.collection("tasks");
+    const query = { _id: new ObjectId(req.params.id) };
+    const result = await collection.findOne(query);
 
     if (!result) res.send("Not found").status(404);
     else res.send(result).status(200);
@@ -38,54 +42,68 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// This section will help you create a new task.
+// This section will help you create or update a task.
 router.post("/", async (req, res) => {
   try {
-    let newDocument = {
-      userId: req.body.userId,
-      clientId: req.body.clientId || null,
-      text: req.body.text,
-      dueAt: new Date(req.body.dueAt),
-      status: "open",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-    let collection = await db.collection("tasks");
-    let result = await collection.insertOne(newDocument);
-    res.send(result).status(201);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error adding task");
-  }
-});
+    // Validate required fields
+    if (!req.body.userId) {
+      return res.status(400).send("userId is required");
+    }
+    
+    if (!req.body.text || req.body.text.trim() === "") {
+      return res.status(400).send("Task text is required");
+    }
+    
+    if (!req.body.dueAt) {
+      return res.status(400).send("Due date is required");
+    }
 
-// This section will help you update a task by id.
-router.put("/:id", async (req, res) => {
-  try {
-    const query = { _id: new ObjectId(req.params.id) };
-    const updates = {
-      $set: {
-        clientId: req.body.clientId !== undefined ? req.body.clientId : null,
-        text: req.body.text,
-        dueAt: req.body.dueAt ? new Date(req.body.dueAt) : undefined,
-        status: req.body.status,
-        updatedAt: new Date(),
-      },
-    };
+    const collection = await db.collection("tasks");
+    
+    // If id is provided, update existing task
+    if (req.body.id) {
+      const query = { _id: new ObjectId(req.body.id) };
+      const updates = {
+        $set: {
+          clientId: req.body.clientId !== undefined ? req.body.clientId : null,
+          text: req.body.text,
+          dueAt: req.body.dueAt ? new Date(req.body.dueAt) : undefined,
+          status: req.body.status,
+          updatedAt: new Date(),
+        },
+      };
 
-    // Remove undefined fields
-    Object.keys(updates.$set).forEach(key => {
-      if (updates.$set[key] === undefined) {
-        delete updates.$set[key];
+      // Remove undefined fields
+      Object.keys(updates.$set).forEach(key => {
+        if (updates.$set[key] === undefined) {
+          delete updates.$set[key];
+        }
+      });
+
+      const result = await collection.updateOne(query, updates);
+      
+      if (result.matchedCount === 0) {
+        return res.status(404).send("Task not found");
       }
-    });
-
-    let collection = await db.collection("tasks");
-    let result = await collection.updateOne(query, updates);
-    res.send(result).status(200);
+      
+      res.send(result).status(200);
+    } else {
+      // Create new task
+      const newDocument = {
+        userId: req.body.userId,
+        clientId: req.body.clientId || null,
+        text: req.body.text,
+        dueAt: new Date(req.body.dueAt),
+        status: "open",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+      const result = await collection.insertOne(newDocument);
+      res.send(result).status(201);
+    }
   } catch (err) {
     console.error(err);
-    res.status(500).send("Error updating task");
+    res.status(500).send("Error saving task");
   }
 });
 
@@ -95,7 +113,11 @@ router.delete("/:id", async (req, res) => {
     const query = { _id: new ObjectId(req.params.id) };
 
     const collection = db.collection("tasks");
-    let result = await collection.deleteOne(query);
+    const result = await collection.deleteOne(query);
+
+    if (result.deletedCount === 0) {
+      return res.status(404).send("Task not found");
+    }
 
     res.send(result).status(200);
   } catch (err) {

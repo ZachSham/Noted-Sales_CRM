@@ -20,7 +20,7 @@ export default function Client() {
       
       const userId = localStorage.getItem("userId");
       if (!userId) {
-        window.location.href = "/";
+        navigate("/");
         return;
       }
       
@@ -62,32 +62,24 @@ export default function Client() {
     e.preventDefault();
     const userId = localStorage.getItem("userId");
     if (!userId) {
-      window.location.href = "/";
+      navigate("/");
       return;
     }
     
     const person = { ...form, userId };
+    if (!isNew) {
+      person.id = params.id;
+    }
+    
     try {
-      let response;
-      if (isNew) {
-        // if we are adding a new client we will POST to /clients.
-        response = await fetch("http://localhost:5050/clients", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(person),
-        });
-      } else {
-        // if we are updating a client we will PATCH to /clients/:id.
-        response = await fetch(`http://localhost:5050/clients/${params.id}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(person),
-        });
-      }
+      // Use single POST endpoint for both create and update
+      const response = await fetch("http://localhost:5050/clients", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(person),
+      });
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
