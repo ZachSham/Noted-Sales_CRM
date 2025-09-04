@@ -56,7 +56,7 @@ export default function Login() {
   }
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="w-full max-w-md mx-auto mt-8">
       <div className="bg-white border rounded-lg p-6">
         <h2 className="text-lg font-semibold mb-4 text-center">
           {isLogin ? "Login" : "Create Account"}

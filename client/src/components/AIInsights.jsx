@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 export default function AIInsights() {
   const { id } = useParams();
   const [client, setClient] = useState(null);
+  const [aiResponse, setAiResponse] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function fetchClient() {
@@ -26,6 +28,35 @@ export default function AIInsights() {
     fetchClient();
   }, [id]);
 
+  const generateInsights = async () => {
+    if (!client) return;
+    
+    setIsLoading(true);
+    try {
+      const response = await fetch("http://localhost:5050/ai/insights", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          clientData: client
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      setAiResponse(result.insights);
+    } catch (error) {
+      console.error("Error generating AI insights :", error);
+      setAiResponse("Error generating insights. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="w-full">
       <h3 className="text-lg font-semibold p-4">AI Insights</h3>
@@ -38,11 +69,25 @@ export default function AIInsights() {
             <p className="text-sm text-slate-600 mb-4">
               AI-powered insights and recommendations for this client.
             </p>
+            
+            <button
+              onClick={generateInsights}
+              disabled={isLoading}
+              className="mb-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isLoading ? "Generating Insights..." : "Generate AI Insights"}
+            </button>
+            
+            {aiResponse && (
+              <div className="mt-4 p-4 bg-slate-50 rounded-lg">
+                <h5 className="font-medium text-slate-900 mb-2">AI Insights:</h5>
+                <p className="text-sm text-slate-700 whitespace-pre-wrap">{aiResponse}</p>
+              </div>
+            )}
           </div>
         ) : (
           <p className="text-slate-600 mb-4">Loading client information...</p>
         )}
-        <p className="text-slate-600">AI insights functionality coming soon...</p>
       </div>
     </div>
   );

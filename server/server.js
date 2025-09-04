@@ -1,9 +1,13 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import cors from "cors";
 import clients from "./routes/clients.js";
 import taskRouter from "./routes/task.js";
 import meetingsRouter from "./routes/meetings.js";
 import auth from "./routes/auth.js";
+import aiRouter from "./routes/ai.js";
 
 const PORT = process.env.PORT || 5050;
 const app = express();
@@ -14,6 +18,7 @@ app.use("/auth", auth);
 app.use("/clients", clients);
 app.use("/task", taskRouter);
 app.use("/meetings", meetingsRouter);
+app.use("/ai", aiRouter);
 
 // start the Express server
 app.listen(PORT, () => {

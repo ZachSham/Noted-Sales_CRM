@@ -116,7 +116,8 @@ export default function UpcomingMeetings() {
       setShowForm(false);
 
       // Refresh meetings list
-      const updatedResponse = await fetch(`http://localhost:5050/meetings/`);
+      const userId = localStorage.getItem("userId");
+      const updatedResponse = await fetch(`http://localhost:5050/meetings/?userId=${userId}`);
       const updatedMeetings = await updatedResponse.json();
       setMeetings(updatedMeetings);
     } catch (error) {
@@ -171,6 +172,7 @@ export default function UpcomingMeetings() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          userId: localStorage.getItem("userId"),
           clientId: editForm.clientId || null,
           title: editForm.title,
           meetingAt: new Date(dateTimeString),
@@ -214,7 +216,8 @@ export default function UpcomingMeetings() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5050/meetings/${id}`, {
+      const userId = localStorage.getItem("userId");
+      const response = await fetch(`http://localhost:5050/meetings/${id}?userId=${userId}`, {
         method: "DELETE",
       });
 

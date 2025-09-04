@@ -110,7 +110,8 @@ export default function TaskManager() {
         setShowForm(false);
 
       // Refresh tasks list
-      const updatedResponse = await fetch(`http://localhost:5050/task/`);
+      const userId = localStorage.getItem("userId");
+      const updatedResponse = await fetch(`http://localhost:5050/task/?userId=${userId}`);
       const updatedTasks = await updatedResponse.json();
       setTasks(updatedTasks);
     } catch (error) {
@@ -161,6 +162,7 @@ export default function TaskManager() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          userId: localStorage.getItem("userId"),
           clientId: editForm.clientId || null,
           text: editForm.text,
           dueAt: new Date(dateTimeString),
@@ -200,7 +202,8 @@ export default function TaskManager() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5050/task/${id}`, {
+      const userId = localStorage.getItem("userId");
+      const response = await fetch(`http://localhost:5050/task/${id}?userId=${userId}`, {
         method: "DELETE",
       });
 
