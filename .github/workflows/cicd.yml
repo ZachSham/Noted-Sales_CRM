@@ -27,6 +27,6 @@ jobs:
       - name: Delete old container
         run: docker rm -f noted-salescrm-container || true
       - name: Run Docker Container
-        run: docker run -d -p 4000:4000 --name noted-salescrm-container -e MONGOPASSWORD='${{ secrets.MONGOPASSWORD }}' zachsham/noted-sales_crm:latest
+        run: docker run -d -p 5050:5050 --name noted-salescrm-container -e MONGOPASSWORD='${{ secrets.MONGOPASSWORD }}' zachsham/noted-sales_crm:latest
 
 
