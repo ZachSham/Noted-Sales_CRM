@@ -17,7 +17,7 @@ export default function AIInsights() {
           return;
         }
         
-        const response = await fetch(`http://localhost:5050/clients/${id}?userId=${userId}`);
+        const response = await fetch(`http://3.141.106.235:5050/clients/${id}?userId=${userId}`);
         if (response.ok) {
           const clientData = await response.json();
           setClient(clientData);
@@ -34,7 +34,7 @@ export default function AIInsights() {
     
     setIsLoading(true);
     try {
-      const response = await fetch("http://localhost:5050/ai/insights", {
+      const response = await fetch("http://3.141.106.235:5050/ai/insights", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

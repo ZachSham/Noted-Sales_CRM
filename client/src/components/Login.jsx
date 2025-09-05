@@ -22,7 +22,7 @@ export default function Login() {
 
     try {
       const endpoint = isLogin ? "/auth/login" : "/auth/register";
-      const response = await fetch(`http://localhost:5050${endpoint}`, {
+      const response = await fetch(`http://3.141.106.235:5050${endpoint}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -28,7 +28,7 @@ export default function ClientList() {
         return;
       }
       
-      const response = await fetch(`http://localhost:5050/clients/?userId=${userId}`);
+      const response = await fetch(`http://3.141.106.235:5050/clients/?userId=${userId}`);
       if (!response.ok) {
         const message = `An error occurred: ${response.statusText}`;
         console.error(message);
@@ -43,7 +43,7 @@ export default function ClientList() {
   // This method will delete a client
   async function deleteClient(id) {
     const userId = localStorage.getItem("userId");
-    await fetch(`http://localhost:5050/clients/${id}?userId=${userId}`, {
+    await fetch(`http://3.141.106.235:5050/clients/${id}?userId=${userId}`, {
       method: "DELETE",
     });
     const newClients = clients.filter((el) => el._id !== id);
@@ -67,7 +67,7 @@ export default function ClientList() {
     }
 
     try {
-      const response = await fetch("http://localhost:5050/clients", {
+      const response = await fetch("http://3.141.106.235:5050/clients", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -91,7 +91,7 @@ export default function ClientList() {
 
       // Refresh clients list
       const userId = localStorage.getItem("userId");
-      const updatedResponse = await fetch(`http://localhost:5050/clients/?userId=${userId}`);
+      const updatedResponse = await fetch(`http://3.141.106.235:5050/clients/?userId=${userId}`);
       const updatedClients = await updatedResponse.json();
       setClients(updatedClients);
     } catch (error) {
@@ -130,7 +130,7 @@ export default function ClientList() {
     }
 
     try {
-      const response = await fetch("http://localhost:5050/clients", {
+      const response = await fetch("http://3.141.106.235:5050/clients", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -160,7 +160,7 @@ export default function ClientList() {
 
       // Refresh clients list
       const userId = localStorage.getItem("userId");
-      const updatedResponse = await fetch(`http://localhost:5050/clients/?userId=${userId}`);
+      const updatedResponse = await fetch(`http://3.141.106.235:5050/clients/?userId=${userId}`);
       const updatedClients = await updatedResponse.json();
       setClients(updatedClients);
     } catch (error) {

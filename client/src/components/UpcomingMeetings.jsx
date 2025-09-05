@@ -34,7 +34,7 @@ export default function UpcomingMeetings() {
           return;
         }
         
-        const response = await fetch(`http://localhost:5050/meetings/?userId=${userId}`);
+        const response = await fetch(`http://3.141.106.235:5050/meetings/?userId=${userId}`);
         if (!response.ok) {
           const message = `An error occurred: ${response.statusText}`;
           console.error(message);
@@ -59,7 +59,7 @@ export default function UpcomingMeetings() {
           return;
         }
         
-        const response = await fetch(`http://localhost:5050/clients/?userId=${userId}`);
+        const response = await fetch(`http://3.141.106.235:5050/clients/?userId=${userId}`);
         if (!response.ok) {
           const message = `An error occurred: ${response.statusText}`;
           console.error(message);
@@ -94,7 +94,7 @@ export default function UpcomingMeetings() {
       // Combine date and time into a single datetime string
       const dateTimeString = `${form.meetingDate}T${form.meetingTime}`;
       
-      const response = await fetch("http://localhost:5050/meetings", {
+      const response = await fetch("http://3.141.106.235:5050/meetings", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -119,7 +119,7 @@ export default function UpcomingMeetings() {
 
       // Refresh meetings list
       const userId = localStorage.getItem("userId");
-      const updatedResponse = await fetch(`http://localhost:5050/meetings/?userId=${userId}`);
+      const updatedResponse = await fetch(`http://3.141.106.235:5050/meetings/?userId=${userId}`);
       const updatedMeetings = await updatedResponse.json();
       setMeetings(updatedMeetings);
     } catch (error) {
@@ -168,7 +168,7 @@ export default function UpcomingMeetings() {
     try {
       const dateTimeString = `${editForm.meetingDate}T${editForm.meetingTime}`;
       
-      const response = await fetch("http://localhost:5050/meetings", {
+      const response = await fetch("http://3.141.106.235:5050/meetings", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -220,7 +220,7 @@ export default function UpcomingMeetings() {
 
     try {
       const userId = localStorage.getItem("userId");
-      const response = await fetch(`http://localhost:5050/meetings/${id}?userId=${userId}`, {
+      const response = await fetch(`http://3.141.106.235:5050/meetings/${id}?userId=${userId}`, {
         method: "DELETE",
       });
 

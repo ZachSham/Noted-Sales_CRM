@@ -25,7 +25,7 @@ export default function Client() {
       }
       
       const response = await fetch(
-        `http://localhost:5050/clients/${params.id.toString()}?userId=${userId}`
+        `http://3.141.106.235:5050/clients/${params.id.toString()}?userId=${userId}`
       );
       if (!response.ok) {
         const message = `An error has occurred: ${response.statusText}`;
@@ -73,7 +73,7 @@ export default function Client() {
     
     try {
       // Use single POST endpoint for both create and update
-      const response = await fetch("http://localhost:5050/clients", {
+      const response = await fetch("http://3.141.106.235:5050/clients", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

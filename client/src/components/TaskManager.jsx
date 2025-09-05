@@ -30,7 +30,7 @@ export default function TaskManager() {
           return;
         }
         
-        const response = await fetch(`http://localhost:5050/task/?userId=${userId}`);
+        const response = await fetch(`http://3.141.106.235:5050/task/?userId=${userId}`);
         if (!response.ok) {
           const message = `An error occurred: ${response.statusText}`;
           console.error(message);
@@ -55,7 +55,7 @@ export default function TaskManager() {
           return;
         }
         
-        const response = await fetch(`http://localhost:5050/clients/?userId=${userId}`);
+        const response = await fetch(`http://3.141.106.235:5050/clients/?userId=${userId}`);
         if (!response.ok) {
           const message = `An error occurred: ${response.statusText}`;
           console.error(message);
@@ -90,7 +90,7 @@ export default function TaskManager() {
       // Combine date and time into a single datetime string
       const dateTimeString = `${form.dueDate}T${form.dueTime}`;
       
-      const response = await fetch("http://localhost:5050/task", {
+      const response = await fetch("http://3.141.106.235:5050/task", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -113,7 +113,7 @@ export default function TaskManager() {
 
       // Refresh tasks list
       const userId = localStorage.getItem("userId");
-      const updatedResponse = await fetch(`http://localhost:5050/task/?userId=${userId}`);
+      const updatedResponse = await fetch(`http://3.141.106.235:5050/task/?userId=${userId}`);
       const updatedTasks = await updatedResponse.json();
       setTasks(updatedTasks);
     } catch (error) {
@@ -158,7 +158,7 @@ export default function TaskManager() {
     try {
       const dateTimeString = `${editForm.dueDate}T${editForm.dueTime}`;
       
-      const response = await fetch("http://localhost:5050/task", {
+      const response = await fetch("http://3.141.106.235:5050/task", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -206,7 +206,7 @@ export default function TaskManager() {
 
     try {
       const userId = localStorage.getItem("userId");
-      const response = await fetch(`http://localhost:5050/task/${id}?userId=${userId}`, {
+      const response = await fetch(`http://3.141.106.235:5050/task/${id}?userId=${userId}`, {
         method: "DELETE",
       });
 

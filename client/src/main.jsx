@@ -5,7 +5,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import App from "./App";
-import Client from "./components/Client";
+import Client from "./components/Client"; 
 import ClientList from "./components/ClientList";
 import UpcomingMeetings from "./components/UpcomingMeetings";
 import TaskManager from "./components/TaskManager";
