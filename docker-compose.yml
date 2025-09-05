@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 
 services:
   backend:
@@ -9,4 +9,5 @@ services:
     environment:
       - NODE_ENV=production
       - MONGOPASSWORD=${MONGOPASSWORD}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
     restart: unless-stopped

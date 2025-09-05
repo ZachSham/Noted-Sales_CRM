@@ -6,9 +6,16 @@ dotenv.config({ path: "./config.env" });
 
 const router = express.Router();
 
+// Guard against missing OpenAI API key
+const { OPENAI_API_KEY } = process.env;
+if (!OPENAI_API_KEY) {
+  // Fail fast with clear message instead of crashing deep in SDK
+  throw new Error("OPENAI_API_KEY is not set. Provide it via env or config.");
+}
+
 // Initialize OpenAI client as per official documentation
 const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
+  apiKey: OPENAI_API_KEY
 });
 
 // POST /ai/insights - Generate AI insights for a client
