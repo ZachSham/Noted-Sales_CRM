@@ -20,6 +20,11 @@ app.use("/task", taskRouter);
 app.use("/meetings", meetingsRouter);
 app.use("/ai", aiRouter);
 
+// Root route with helpful message
+app.get('/', (req, res) => {
+  res.send('Noted Sales CRM API is running. Try /auth, /clients, /task, /meetings, /ai endpoints.');
+});
+
 // start the Express server
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
