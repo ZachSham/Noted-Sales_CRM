@@ -1,10 +1,12 @@
-version: '3.8'
+version: "3.8"
 
 services:
   backend:
     image: zachsham/noted-sales-crm:latest
+    container_name: noted-salescrm-container
     ports:
       - "5050:5050"
     environment:
       - NODE_ENV=production
+      - MONGOPASSWORD=${MONGOPASSWORD}
     restart: unless-stopped

@@ -14,19 +14,18 @@ jobs:
       - name: Login to docker hub
         run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build Docker Image
-        run: docker build -t zachsham/noted-sales-crm .
+        run: docker build -t zachsham/noted-sales-crm:latest -f server/Dockerfile server
       - name: Publish Image to docker hub
-        run: docker push zachsham/noted-sales_crm:latest 
+        run: docker push zachsham/noted-sales-crm:latest 
  
   deploy:
     needs: build
     runs-on: self-hosted 
     steps:
       - name: Pull image from docker hub
-        run: docker pull zachsham/noted-sales_crm:latest 
+        run: docker pull zachsham/noted-sales-crm:latest 
       - name: Delete old container
         run: docker rm -f noted-salescrm-container || true
       - name: Run Docker Container
-        run: docker run -d -p 5050:5050 --name noted-salescrm-container -e MONGOPASSWORD='${{ secrets.MONGOPASSWORD }}' zachsham/noted-sales_crm:latest
-
+        run: docker run -d -p 5050:5050 --name noted-salescrm-container -e MONGOPASSWORD='${{ secrets.MONGOPASSWORD }}' zachsham/noted-sales-crm:latest
 
