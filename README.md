@@ -1,6 +1,6 @@
 # Noted – Sales CRM
 
-Hi, my name is **Zach Shamieh**. I’m a student at **UCLA** with an interest in **Sales Engineering** and **Solutions Consulting**.  
+Hi, my name is **Zach Shamieh**. I’m a computer science student at **UCLA** with an interest in **Sales Engineering** and **Solutions Consulting**.  
 
 I built this CRM to practice full-stack development and to have a project that connects directly to my career goals. My cousin, an **Account Executive at Oracle NetSuite**, suggested features he and other sales reps would find useful, and they tested the app during development.  
 
