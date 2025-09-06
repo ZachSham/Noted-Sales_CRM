@@ -2,7 +2,7 @@
 
 Hi, my name is **Zach Shamieh**. I’m a computer science student at **UCLA** with an interest in **Sales Engineering** and **Solutions Consulting**.  
 
-I built this CRM to practice full-stack development and to have a project that connects directly to my career goals. My cousin, an **Account Executive at Oracle NetSuite**, suggested features he and other sales reps would find useful, and they tested the app after deployment.  
+I built this CRM to practice full-stack development and to have a project that relates directly to my career goals. My cousin, an **Account Executive at Oracle NetSuite**, suggested features he and other sales reps would find useful, and they tested the app after deployment.  
 
 The project runs on **port 5050** for the backend API and is served to the frontend at **http://3.141.106.235:3000/**.  
 
