@@ -19,6 +19,6 @@ The project runs on **port 5050** for the backend API and is served to the front
 - **Client Management** – Add, view, update, and delete client records  
 - **Task Management** – Create tasks with due dates tied to clients or general workflow  
 - **Meeting Tracking** – Schedule and view meetings linked to clients  
-- **AI Note Summaries** – Generate meeting note summaries and suggested follow-ups (powered by OpenAI)  
+- **AI Note Summaries** – Generate client note summaries and suggested follow-ups (powered by OpenAI)  
 
 ---
