@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import API_BASE_URL from "../config";
 
 export default function TaskManager() {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ export default function TaskManager() {
           return;
         }
         
-        const response = await fetch(`http://3.141.106.235:5050/task/?userId=${userId}`);
+        const response = await fetch(`${API_BASE_URL}/task/?userId=${userId}`);
         if (!response.ok) {
           const message = `An error occurred: ${response.statusText}`;
           console.error(message);
@@ -55,7 +56,7 @@ export default function TaskManager() {
           return;
         }
         
-        const response = await fetch(`http://3.141.106.235:5050/clients/?userId=${userId}`);
+        const response = await fetch(`${API_BASE_URL}/clients/?userId=${userId}`);
         if (!response.ok) {
           const message = `An error occurred: ${response.statusText}`;
           console.error(message);
@@ -90,7 +91,7 @@ export default function TaskManager() {
       // Combine date and time into a single datetime string
       const dateTimeString = `${form.dueDate}T${form.dueTime}`;
       
-      const response = await fetch("http://3.141.106.235:5050/task", {
+      const response = await fetch(`${API_BASE_URL}/task`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -158,7 +159,7 @@ export default function TaskManager() {
     try {
       const dateTimeString = `${editForm.dueDate}T${editForm.dueTime}`;
       
-      const response = await fetch("http://3.141.106.235:5050/task", {
+      const response = await fetch(`${API_BASE_URL}/task`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -206,7 +207,7 @@ export default function TaskManager() {
 
     try {
       const userId = localStorage.getItem("userId");
-      const response = await fetch(`http://3.141.106.235:5050/task/${id}?userId=${userId}`, {
+      const response = await fetch(`${API_BASE_URL}/task/${id}?userId=${userId}`, {
         method: "DELETE",
       });
 

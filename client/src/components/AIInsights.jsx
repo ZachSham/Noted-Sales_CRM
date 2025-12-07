@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import API_BASE_URL from "../config";
 
 export default function AIInsights() {
   const { id } = useParams();
@@ -17,7 +18,7 @@ export default function AIInsights() {
           return;
         }
         
-        const response = await fetch(`http://3.141.106.235:5050/clients/${id}?userId=${userId}`);
+        const response = await fetch(`${API_BASE_URL}/clients/${id}?userId=${userId}`);
         if (response.ok) {
           const clientData = await response.json();
           setClient(clientData);
@@ -34,7 +35,7 @@ export default function AIInsights() {
     
     setIsLoading(true);
     try {
-      const response = await fetch("http://3.141.106.235:5050/ai/insights", {
+      const response = await fetch(`${API_BASE_URL}/ai/insights`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

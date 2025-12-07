@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import API_BASE_URL from "../config";
 
 export default function Client() {
   const [form, setForm] = useState({
@@ -25,7 +26,7 @@ export default function Client() {
       }
       
       const response = await fetch(
-        `http://3.141.106.235:5050/clients/${params.id.toString()}?userId=${userId}`
+        `${API_BASE_URL}/clients/${params.id.toString()}?userId=${userId}`
       );
       if (!response.ok) {
         const message = `An error has occurred: ${response.statusText}`;
@@ -73,7 +74,7 @@ export default function Client() {
     
     try {
       // Use single POST endpoint for both create and update
-      const response = await fetch("http://3.141.106.235:5050/clients", {
+      const response = await fetch(`${API_BASE_URL}/clients`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

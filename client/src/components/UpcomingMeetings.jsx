@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import API_BASE_URL from "../config";
 
 export default function UpcomingMeetings() {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ export default function UpcomingMeetings() {
           return;
         }
         
-        const response = await fetch(`http://3.141.106.235:5050/meetings/?userId=${userId}`);
+        const response = await fetch(`${API_BASE_URL}/meetings/?userId=${userId}`);
         if (!response.ok) {
           const message = `An error occurred: ${response.statusText}`;
           console.error(message);
@@ -59,7 +60,7 @@ export default function UpcomingMeetings() {
           return;
         }
         
-        const response = await fetch(`http://3.141.106.235:5050/clients/?userId=${userId}`);
+        const response = await fetch(`${API_BASE_URL}/clients/?userId=${userId}`);
         if (!response.ok) {
           const message = `An error occurred: ${response.statusText}`;
           console.error(message);
@@ -94,7 +95,7 @@ export default function UpcomingMeetings() {
       // Combine date and time into a single datetime string
       const dateTimeString = `${form.meetingDate}T${form.meetingTime}`;
       
-      const response = await fetch("http://3.141.106.235:5050/meetings", {
+      const response = await fetch(`${API_BASE_URL}/meetings`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -168,7 +169,7 @@ export default function UpcomingMeetings() {
     try {
       const dateTimeString = `${editForm.meetingDate}T${editForm.meetingTime}`;
       
-      const response = await fetch("http://3.141.106.235:5050/meetings", {
+      const response = await fetch(`${API_BASE_URL}/meetings`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -220,7 +221,7 @@ export default function UpcomingMeetings() {
 
     try {
       const userId = localStorage.getItem("userId");
-      const response = await fetch(`http://3.141.106.235:5050/meetings/${id}?userId=${userId}`, {
+      const response = await fetch(`${API_BASE_URL}/meetings/${id}?userId=${userId}`, {
         method: "DELETE",
       });
 
